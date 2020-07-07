@@ -37,7 +37,7 @@
 (defun counsel-fd-function (string base-cmd)
   "Grep in the current directory for STRING using BASE-CMD.
 If non-nil, append EXTRA-fd-ARGS to BASE-CMD."
-  (or (counsel-more-chars)
+  (or (ivy-more-chars)
       (let ((default-directory counsel-fd-current-dir)
             (regex (counsel-unquote-regex-parens
                     (setq ivy--old-re
