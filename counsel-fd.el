@@ -39,7 +39,7 @@
 If non-nil, append EXTRA-fd-ARGS to BASE-CMD."
   (or (ivy-more-chars)
       (let ((default-directory counsel-fd-current-dir)
-            (regex (counsel-unquote-regex-parens
+            (regex (counsel--elisp-to-pcre
                     (setq ivy--old-re
                           (ivy--regex-plus string)))))
         (let* ((fd-cmd (concat (format base-cmd) (concat " " (s-wrap regex "'")))))
