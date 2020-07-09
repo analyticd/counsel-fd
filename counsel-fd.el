@@ -51,8 +51,8 @@ If non-nil, append EXTRA-fd-ARGS to BASE-CMD."
   "Grep for file or directory in the current directory using fd.
 INITIAL-INPUT can be given as the initial minibuffer input.
 INITIAL-DIRECTORY, if non-nil, is used as the root directory for search.
-FD-ARGS string, if non-nil, is appended to `counsel-fd-base-command'.
-FD-PROMPT, if non-nil, is passed as `ivy-read' prompt argument."
+FD-PROMPT, if non-nil, is passed as `ivy-read' prompt argument.
+FD-ARGS string, if non-nil, is appended to `counsel-fd-base-command'."
   (interactive
    (list nil
          (when current-prefix-arg
@@ -60,8 +60,10 @@ FD-PROMPT, if non-nil, is passed as `ivy-read' prompt argument."
                                  (car (split-string counsel-fd-base-command))
                                  " in directory: ")))))
   (counsel-require-program (car (split-string counsel-fd-base-command)))
-  (ivy-set-prompt 'counsel-fd #'counsel-prompt-function-dir)
   (setq counsel-fd-current-dir (or initial-directory default-directory))
+  (ivy-set-prompt 'counsel-fd
+                  (lambda () (concat (car (split-string counsel-fd-base-command))
+                                     " " counsel-fd-current-dir)))
   (ivy-read (or fd-prompt (car (split-string counsel-fd-base-command)))
             (lambda (string)
               (counsel-fd-function string (concat counsel-fd-base-command " " (or fd-args " "))))
